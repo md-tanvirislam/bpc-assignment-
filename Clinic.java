@@ -36,6 +36,16 @@ public class Clinic {
         patient.bookAppointment(appointment);
     }
 
+    public void cancelAppointment(Appointment appointment) {
+        if (appointment != null) {
+            appointment.setStatus("cancelled");
+            if (appointment.getPatient() != null) {
+                appointment.getPatient().getAppointments().remove(appointment);
+            }
+            appointment.setPatient(null);
+        }
+    }
+
     public List<Physiotherapist> findPhysiotherapistsByExpertise(String expertise) {
         List<Physiotherapist> matchingPhysios = new ArrayList<>();
         for (Physiotherapist physio : physiotherapists) {
@@ -54,7 +64,6 @@ public class Clinic {
         return physiotherapists;
     }
 
-    // Additional methods for Main.java functionality
     public Physiotherapist findPhysiotherapistByName(String name) {
         for (Physiotherapist physio : physiotherapists) {
             if (physio.getName().equalsIgnoreCase(name)) {
